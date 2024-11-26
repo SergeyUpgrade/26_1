@@ -55,23 +55,48 @@ class Payment(models.Model):
         User,
         on_delete=models.CASCADE,
         verbose_name="Пользователь",
+        blank=True,
+        null=True,
     )
-    payment_date = models.DateField(verbose_name="Дата оплаты")
+    payment_date = models.DateField(verbose_name="Дата оплаты", blank=True, null=True)
     paid_course = models.ForeignKey(
-        Courses, on_delete=models.CASCADE, verbose_name="Оплаченный курс"
+        Courses, on_delete=models.CASCADE, verbose_name="Оплаченный курс", blank=True, null=True
     )
     separately_paid_lesson = models.ForeignKey(
-        Lessons, on_delete=models.CASCADE, verbose_name="Отдельно оплаченный урок"
+        Lessons, on_delete=models.CASCADE, verbose_name="Отдельно оплаченный урок", blank=True, null=True
     )
     payment_amount = models.DecimalField(
         max_digits=10,
         decimal_places=2,
         verbose_name="Сумма оплаты",
+        blank=True,
+        null=True,
     )
     payment_method = models.CharField(
         max_length=20,
         choices=PAYMENT_METHOD_CHOICES,
         verbose_name="Способ оплаты",
+        blank=True,
+        null=True,
+    )
+
+    session_id = models.CharField(
+        max_length=255,
+        verbose_name="ID сессии",
+        blank=True,
+        null=True,
+    )
+    link = models.URLField(
+        max_length=400,
+        verbose_name="Ссылка на оплату",
+        blank=True,
+        null=True,
+    )
+    status = models.CharField(
+        max_length=50,
+        verbose_name="Статус платежа",
+        blank=True,
+        null=True,
     )
 
     def __str__(self):
@@ -80,3 +105,4 @@ class Payment(models.Model):
     class Meta:
         verbose_name = "Платеж"
         verbose_name_plural = "Платежи"
+
